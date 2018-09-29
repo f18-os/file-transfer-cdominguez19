@@ -37,3 +37,21 @@ def framedReceive(sock, debug=0):
                  print("FramedReceive: incomplete message. \n  state=%s, length=%d, rbuf=%s" % (state, msgLength, rbuf))
              return None
          if debug: print("FramedReceive: state=%s, length=%d, rbuf=%s" % (state, msgLength, rbuf))
+
+def putFileSend(sock, debug=0):#THIS IS TO SEND THE FILE TO THE SERVER along with name
+     fname = input("Enter file name to send to server: ")
+     f = open(fname, 'r')
+     print("Sending file")
+     pl = f.read(1024)
+     while (pl):
+          msg = str(len(pl)).encode() + b':' + pl
+          while len(msg):
+               nsent = sock.send(msg)
+               msg = msg[nsent:]
+          pl = f.read(1024)
+     f.close()
+     print("File Sent")
+     sock.shutdown(socket.SHUT_WR)#Not sure on this part
+     sock.close()
+
+#WHAT IS NEEDED IS A WAY TO RECIVE THE FILE SERVERSIDE AND STORE IT
