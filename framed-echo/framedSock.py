@@ -55,3 +55,33 @@ def putFileSend(sock, debug=0):#THIS IS TO SEND THE FILE TO THE SERVER along wit
      sock.close()
 
 #WHAT IS NEEDED IS A WAY TO RECIVE THE FILE SERVERSIDE AND STORE IT
+def getFileSend(sock, debug = 0):
+     f = open('recvFile.txt','w+')
+     global rbuf
+     state = "getLength"
+     msgLength = -1
+     while True:
+          if (state == "getLength"):#if size not arrived yet then recv another 100 bytes of data
+              match = re.match(b'([^:]+):(.*)', rbuf) # look for colon
+              if match:
+                   lengthStr, rbuf = match.groups()
+                   try: 
+                        msgLength = int(lengthStr)
+                   except:
+                        if len(rbuf):
+                             print("badly formed message length:", lengthStr)
+                             return None
+                   state = "getPayload"
+          if state == "getPayload":#if payload not size stated then receive another 100 bytes of data
+              if len(rbuf) >= msgLength:
+                  payload = rbuf[0:msgLength]
+                  rbuf = rbuf[msgLength:]
+                  #return payload instead of returning collected msg, put into file
+                  f.write(payload)
+          r = sock.recv(100)
+          rbuf += r
+          if len(r) == 0:
+              if len(rbuf) != 0:
+                   print("FramedReceive: incomplete message. \n  state=%s, length=%d, rbuf=%s" % (state, msgLength, rbuf))
+                   return None
+          if debug: print("FramedReceive: state=%s, length=%d, rbuf=%s" % (state, msgLength, rbuf))

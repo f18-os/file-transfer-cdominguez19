@@ -32,7 +32,7 @@ from framedSock import framedSend, framedReceive
 
 while True:
     payload = framedReceive(sock, debug)
-    if debug: print("rec'd: ", payload)
+    print("rec'd: ", payload)
     if not payload:
         break
     payload += b"!"             # make emphatic!
