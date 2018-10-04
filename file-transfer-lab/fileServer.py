@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import sys
 sys.path.append("../lib")       # for params
-import re, socket, params
+import re, os, socket, params
 
 switchesVarDefaults = (
     (('-l', '--listenPort') ,'listenPort', 50001),
@@ -23,11 +23,12 @@ lsock.bind(bindAddr)
 lsock.listen(5)
 print("listening on:", bindAddr)
 
-sock, addr = lsock.accept()
+while True:
+    sock, addr = lsock.accept()
 
-print("connection rec'd from", addr)
+    from framedSock import framedReceive
 
-
-from framedSock import framedReceive
-
-framedReceive(sock, "fsend.txt", debug)
+    if not os.fork():
+        print("child handling connection: ", addr)
+        framedReceive(sock, "fsend.txt", debug)
+        sys.exit(0)

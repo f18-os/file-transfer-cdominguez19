@@ -59,4 +59,3 @@ if s is None:
 
 print("sending file")
 putFileSend(s, "fsend.txt", debug)
-#print("received:", getFileSend(s, debug))
