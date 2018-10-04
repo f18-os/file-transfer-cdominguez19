@@ -17,6 +17,9 @@ def framedReceive(sock, fname, debug=0):
                        if len(rbuf):
                             print("badly formed message length:", lengthStr)
                             return None
+                       elif msgLength == 0:
+                            print("zero length file not store... exiting")
+                            return None
                   state = "getPayload"
          if state == "getPayload":
              if len(rbuf) >= msgLength:

@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 # Echo client program
-import socket, sys, re
+import socket, os, sys, re
 
 sys.path.append("../lib")       # for params
 import params
@@ -56,6 +56,14 @@ if s is None:
     print('could not open socket')
     sys.exit(1)
 
+fname = input("please enter name of file to send to server: ")
+files = [f for f in os.listdir('.') if os.path.isfile(f)]
+for f in files:
+    if f == fname:
+        break
+else:
+    print("file for sending not found exiting")
+    sys.exit(0)
 
 print("sending file")
-putFileSend(s, "fsend.txt", debug)
+putFileSend(s, fname, debug)

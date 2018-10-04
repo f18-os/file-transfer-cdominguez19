@@ -30,5 +30,5 @@ while True:
 
     if not os.fork():
         print("child handling connection: ", addr)
-        framedReceive(sock, "fsend.txt", debug)
+        framedReceive(sock, "fsent.txt", debug)
         sys.exit(0)
