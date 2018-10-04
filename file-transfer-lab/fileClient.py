@@ -57,13 +57,13 @@ if s is None:
     sys.exit(1)
 
 fname = input("please enter name of file to send to server: ")
-files = [f for f in os.listdir('.') if os.path.isfile(f)]
+files = [f for f in os.listdir('.') if os.path.isfile(f)]#determine if file exists for sending
 for f in files:
     if f == fname:
         break
 else:
-    print("file for sending not found exiting")
+    print("file for sending not found exiting")#if file not found exit
     sys.exit(0)
 
 print("sending file")
-putFileSend(s, fname, debug)
+putFileSend(s, fname, debug)#otherwise send file to server

@@ -28,7 +28,7 @@ while True:
 
     from framedSock import framedReceive
 
-    if not os.fork():
+    if not os.fork():#if connection established then fork and let child handle file
         print("child handling connection: ", addr)
         framedReceive(sock, "fsent.txt", debug)
         sys.exit(0)
