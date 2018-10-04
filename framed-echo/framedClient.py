@@ -6,7 +6,7 @@ import socket, sys, re
 sys.path.append("../lib")       # for params
 import params
 
-from framedSock import framedSend, framedReceive
+from framedSock import putFileSend, getFileSend
 
 
 switchesVarDefaults = (
@@ -57,11 +57,11 @@ if s is None:
     sys.exit(1)
 
 
-print("sending hello world")
-framedSend(s, b"hello world", debug)
-print("received:", framedReceive(s, debug))
+print("sending file")
+putFileSend(s, "fsend.txt", debug)
+#print("received:", getFileSend(s, debug))
 
-print("sending hello world")
-framedSend(s, b"hello world", debug)
-print("received:", framedReceive(s, debug))
+#print("sending hello world")
+#framedSend(s, b"hello world", debug)
+#print("received:", framedReceive(s, debug))
 

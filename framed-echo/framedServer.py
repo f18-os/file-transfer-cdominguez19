@@ -30,10 +30,18 @@ print("connection rec'd from", addr)
 
 from framedSock import framedSend, framedReceive
 
-while True:
-    payload = framedReceive(sock, debug)
-    print("rec'd: ", payload)
-    if not payload:
-        break
-    payload += b"!"             # make emphatic!
-    framedSend(sock, payload, debug)
+#while True:
+framedReceive(sock, debug)
+#rpayload = str(payload.decode())
+#with open('test.txt','w+') as fhandle:
+    #fhandle.write(payload.decode())
+#sock.close()
+#f = open('test.txt','w+')
+#f.write(payload)
+#f.close()
+#MIGHT NOT NEED GETFILESEND JUST GET PAYLOAD OUT HERE AND PUT INTO FILE
+    #if debug: print("rec'd: ", payload)
+    #if not payload:
+        #break
+    #payload += b"!"             # make emphatic!
+    #framedSend(sock, payload, debug)
